@@ -43,7 +43,7 @@
                 <%= book_comment.user.name %>
               <% end %>
             </td>
-            <td colspan="3"><%= book_comment.comment %></td>
+            <td colspan="3">Comment<br><%= book_comment.comment %></td>
             <td>
               <% if book_comment.user == current_user %>
                 <%= link_to "Destroy",book_book_comment_path(book_comment.book, book_comment),
