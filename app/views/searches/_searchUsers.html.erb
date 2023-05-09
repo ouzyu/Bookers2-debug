@@ -1,19 +1,21 @@
-<h2>Users search for ""</h2>
+<h2>Users search for "<%= word %>"</h2>
 <table class="table">
   <thead>
     <tr>
       <th></th>
       <th>name</th>
-      <th colspan="3"></th>
+      <th>introduction</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td></td>
-      <td></td>
-      <td>フォロー数:</td>
-      <td>フォロワー数:</td>
-      <td></td>
-    </tr>
+    <% users.each do |user| %>
+      <tr>
+        <td><%= image_tag user.get_profile_image, size: '50x50' %></td>
+        <td><%= user.name %></td>
+        <td><%= user.introduction %></td>
+        <td><%= link_to "Show", user %></td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
