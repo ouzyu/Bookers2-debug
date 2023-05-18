@@ -1,0 +1,13 @@
+<% messages.each do |m| %>
+  <% if m.user_id == current_user.id %>
+    <tr>
+      <td><%= m.body %></td>
+      <td></td>
+    </tr>
+  <% else %>
+    <tr>
+      <td></td>
+      <td><%= m.body %></td>
+    </tr>
+  <% end %>
+<% end %>

@@ -1,0 +1,3 @@
+$("#chat-list").html("<%= j(render partial: "rooms/list", locals: { messages: @messages }) %>");
+$("textfield").val('');
+alert('create呼ばれた！！');

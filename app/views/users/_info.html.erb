@@ -36,9 +36,9 @@
       <td>
         <% if (current_user.following?(user)) && (user.following?(current_user))%>
           <% if isRoom == true %>
-            <a href="/rooms/<%= roomId %>">チャットへ</a>
+            <%= link_to "チャットへ", room_path(roomId) %>
           <% else %>
-            <%= form_for room do |f| %>
+            <%= form_with model: room do |f| %>
               <%= fields_for entry do |e| %>
                 <%= e.hidden_field :user_id, value: user.id %>
               <% end %>
