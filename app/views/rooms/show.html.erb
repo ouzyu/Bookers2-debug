@@ -1,11 +1,31 @@
 <h1><%= @another_entry.user.name %>さんとのチャット</h1>
 <!--部分テンプレートでチャット一覧を表示、非同期通信で更新を行う-->
-<% @messages.each do |m| %>
-  <%= m.body %>
-<% end %>
+<div class='container px-5 px-sm-0'>
+  <div class='row'>
+    <table class="table table-borderless">
+      <tr>
+        <th><%= current_user.name %></th>
+        <th><%= @another_entry.user.name %></th>
+      </tr>
+      <% @messages.each do |m| %>
+        <% if m.user_id == current_user.id %>
+          <tr>
+            <td><%= m.body %></td>
+            <td></td>
+          </tr>
+        <% else %>
+          <tr>
+            <td></td>
+            <td><%= m.body %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>
+    <%= form_for @message do |f| %>
+      <%= f.text_field :body, placeholder: "メッセージ" %>
+      <%= f.hidden_field :room_id, value: @room.id %>
+      <% f.submit %>
+    <% end %>
+  </div>
+</div>
 
-<%= form_for @message do |f| %>
-  <%= f.text_field :body, placeholder: "メッセージを入力してください" %>
-  <%= f.hidden_field :room_id, value: @room.id %>
-  <%= f.submit "送信する" %>
-<% end %>
