@@ -7,10 +7,10 @@
         <th><%= @another_entry.user.name %></th>
       </tr>
       <div id="chat-list">
-        <%= render partial: "rooms/list", locals: { messages: @messages } %>
+        <%= render "list", messages: @messages %>
       </div>
     </table>
-    <%= form_with model: @message, remote: true do |f| %>
+    <%= form_with model: @message do |f| %>
       <%= f.text_field :body, placeholder: "メッセージ" %>
       <%= f.hidden_field :room_id, value: @room.id %>
       <% f.submit %>

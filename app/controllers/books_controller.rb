@@ -2,11 +2,14 @@ class BooksController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_correct_user, only: [:update, :edit, :destroy]
 
+  impressionist :actions=> [:show]
+
   def show
     @book = Book.find(params[:id])
     @book_new = Book.new
     @user = @book.user
     @book_comment = BookComment.new
+    impressionist(@book, nil, unique: [:session_hash])
     @currentUserEntry = Entry.where(user_id: current_user.id)
     @userEntry = Entry.where(user_id: @user.id)
     unless @user.id == current_user.id
