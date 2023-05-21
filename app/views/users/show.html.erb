@@ -1,3 +1,6 @@
+<% content_for(:body_attributes) do %>
+  data-turbolinks="false"
+<% end %>
 <div class='container px-5 px-sm-0'>
   <div class='row'>
     <div class='col-md-3'>
@@ -9,50 +12,28 @@
     <div class='col-md-8 offset-md-1'>
       <h2>Books</h2>
       <%= render 'books/index',books: @books %>
-      <h3>投稿数の前日比・前週比</h3>
-      <table class="table table-bordered">
+      <h4>7日分の投稿数</h4>
+      <table class="table table-bordered" >
         <thead>
           <tr>
-            <th>今日の投稿</th>
-            <th>昨日の投稿</th>
-            <th>前日比</th>
+            <th>6日前</th>
+            <th>5日前</th>
+            <th>4日前</th>
+            <th>3日前</th>
+            <th>2日前</th>
+            <th>昨日</th>
+            <th>今日</th>
+          </tr>
+          <tr>
+            <% @books.past_week_count.each do |book| %>
+              <td><%= book %></td>
+            <% end %>
+            <td><%= @books.created_today.count %></td>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td><%= @today_book.count %></td>
-            <td><%= @yesterday_book.count %></td>
-            <% if @yesterday_book.count == 0 %>
-              <td>前日の投稿はなし</td>
-            <% else %>
-              <td><% @the_day_before = @today_book.count / @yesterday_book.count %>
-              <%= (@the_day_before * 100).round %>%</td>
-            <% end %>
-          </tr>
-        </tbody>
       </table>
-
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>今週の投稿</th>
-            <th>先週の投稿</th>
-            <th>先週比</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><%= @this_week_book.count %></td>
-            <td><%= @last_week_book.count %></td>
-            <% if @last_week_book.count == 0 %>
-              <td>先週の投稿はなし</td>
-            <% else %>
-              <td><% @the_week_before = @this_week_book.count / @last_week_book.count %>
-              <%= (@the_week_before * 100).round %>%</td>
-            <% end %>
-          </tr>
-        </tbody>
-      </table>
+      <%#  <%= render 'postCountTable', today_book: @today_book, yesterday_book: @yesterday_book,
+        this_week_book: @this_week_book, last_week_book: @last_week_book %>
     </div>
   </div>
 </div>
