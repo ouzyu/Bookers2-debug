@@ -16,7 +16,7 @@ class Book < ApplicationRecord
   scope :created_days_ago, ->(n) { where(created_at: n.days.ago.all_day) }
 
   def self.past_week_count
-    (1..6).map { |n| created_days_ago(n).count }.reverse
+    (0..6).map { |n| created_days_ago(n).count }.reverse
   end
 
   def favorited_by?(user)
