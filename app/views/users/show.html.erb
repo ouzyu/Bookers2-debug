@@ -12,63 +12,18 @@
     <div class='col-md-8 offset-md-1'>
       <h2>Books</h2>
       <%= render 'books/index',books: @books %>
-      <h4>7日間の投稿数</h4>
-      <table class="table table-bordered" >
-        <thead>
-          <tr>
-            <th>6日前</th>
-            <th>5日前</th>
-            <th>4日前</th>
-            <th>3日前</th>
-            <th>2日前</th>
-            <th>1日前</th>
-            <th>今日</th>
-          </tr>
-          <tr>
-            <% @books.past_week_count.each do |book| %>
-              <td><%= book %></td>
-            <% end %>
-          </tr>
-        </thead>
-      </table>
-      <canvas id="postsChart"></canvas>
-        <script>
-          $(document).on('turbolinks:load', function() {
-          var ctx = document.getElementById("postsChart");
-          var postsChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
-              datasets: [
-                {
-                  label: '投稿した本の数',
-                  data: <%= @books.past_week_count %>,
-                  borderColor: "rgba(0,0,255,1)",
-                  backgroundColor: "rgba(0,0,0,0"
-                }
-              ],
-            },
-            options: {
-              title: {
-                display: true,
-                text: '7日間の投稿数の比較'
-              },
-              scales: {
-                yAxes: [{
-                  ticks: {
-                    suggestedMax: 10,
-                    suggestedMin: 0,
-                    stepSize: 1,
-                    callback: function(value, index, values){
-                      return value
-                    }
-                  }
-                }]
-              },
-            }
-          });
-        });
-        </script>
+
+      <%= form_with url: user_search_path(@user), local: false, method: :get do |f| %>
+        <%= f.date_field :created_at %>
+        <%= f.submit '検索', class: 'btn btn-primary' %>
+      <% end %>
+
+      <div id="search_result">
+        <% if @search_book.present? %>
+          <%= render 'users/postCountSearch', search_book: @search_book %>
+        <% end %>
+      </div>
+      <%# render 'postCountChart', books: @books %>
       <%#  <%= render 'postCountTable', today_book: @today_book, yesterday_book: @yesterday_book,
         this_week_book: @this_week_book, last_week_book: @last_week_book %>
     </div>
