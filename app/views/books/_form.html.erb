@@ -7,6 +7,32 @@
     <%= f.label :opinion %>
     <%= f.text_area :body, class: 'form-control book_body' %>
   </div>
+  <% if book.id.nil? %>
+    <div class="form-group row" id="star">
+      <%= f.label "Rate" %>
+      <%= f.hidden_field :star, id: :review_star, class: 'form-control' %>
+      <div id="post_raty"></div>
+      <script>
+        $(document).on('turbolinks:load',function() {
+          let elem = document.querySelector('#post_raty');
+          if (elem == null) return;
+
+          elem.innerHTML = ""
+          let opt = {
+            starOn: "<%= asset_path('star-on.png') %>",
+            starOff: "<%= asset_path('star-off.png') %>",
+            half: false,
+            scoreName: 'book[star]',
+          };
+          raty(elem, opt);
+        });
+      </script>
+    </div>
+  <% else %>
+    <div class="form-group">
+      <%= render "books/staticRate.html.erb",book: book %>
+    </div>
+  <% end %>
   <div class="form-group">
     <%= f.submit class: 'btn btn-success' %>
   </div>
