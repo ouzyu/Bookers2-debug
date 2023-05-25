@@ -5,7 +5,8 @@
       <th></th>
       <th>name</th>
       <th>introduction</th>
-      <th></th>
+      <th>follows</th>
+      <th>followers</th>
     </tr>
   </thead>
   <tbody>
@@ -14,6 +15,8 @@
         <td><%= image_tag user.get_profile_image, size: '50x50' %></td>
         <td><%= user.name %></td>
         <td><%= user.introduction %></td>
+        <td><%= user.followings.count %></td>
+        <td><%= user.followers.count %></td>
         <td><%= link_to "Show", user %></td>
       </tr>
     <% end %>

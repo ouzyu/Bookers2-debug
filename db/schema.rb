@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_24_052005) do
+ActiveRecord::Schema.define(version: 2023_05_25_111730) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -139,6 +139,21 @@ ActiveRecord::Schema.define(version: 2023_05_24_052005) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "tag_maps", force: :cascade do |t|
+    t.integer "book_id", null: false
+    t.integer "tag_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_id"], name: "index_tag_maps_on_book_id"
+    t.index ["tag_id"], name: "index_tag_maps_on_tag_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "tag_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -161,4 +176,6 @@ ActiveRecord::Schema.define(version: 2023_05_24_052005) do
   add_foreign_key "group_users", "users"
   add_foreign_key "messages", "rooms"
   add_foreign_key "messages", "users"
+  add_foreign_key "tag_maps", "books"
+  add_foreign_key "tag_maps", "tags"
 end
