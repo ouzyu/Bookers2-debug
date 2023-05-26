@@ -19,7 +19,7 @@
           <td><%= @book.body %></td>
           <td>
             <% @book_tags.each do |tag| %>
-              <p><%= tag.tag_name %></p>
+              <p><%= link_to tag.tag_name, search_tag_path(word: tag.tag_name) %></p>
             <% end %>
           </td>
           <td id="favorite_buttons_<%= @book.id %>">
