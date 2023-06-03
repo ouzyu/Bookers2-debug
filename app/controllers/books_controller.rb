@@ -40,11 +40,6 @@ class BooksController < ApplicationController
     else
       @books = Book.all
     end
-    # 過去一週間以内のいいねの多い順
-    # to = Time.current.at_end_of_day
-    # from = (to - 6.day).at_beginning_of_day
-    # @books = Book.includes(:favorites).
-    #   sort_by {|x| x.favorites.where(created_at: from...to).size}.reverse
     @book = Book.new
   end
 
