@@ -4,15 +4,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    if params[:latest]
-      @books = @user.books.latest
-    elsif params[:old]
-      @books = @user.books.old
-    elsif params[:star_count]
-      @books = @user.books.star_count
-    else
-      @books = @user.books
-    end
+    @books = sort_by_params(@user)
     @book = Book.new
     @today_book = @books.created_today
     @yesterday_book = @books.created_yesterday
@@ -78,15 +70,15 @@ class UsersController < ApplicationController
     end
   end
 
-  def sort_by
+  def sort_by_params(user)
     if params[:latest]
-      @books = Book.latest
+      user.books.latest
     elsif params[:old]
-      @books = Book.old
+      user.books.old
     elsif params[:star_count]
-      @books = Book.star_count
+      user.books.star_count
     else
-      @books = Book.all
+      user.books
     end
   end
 end

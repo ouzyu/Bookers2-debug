@@ -31,15 +31,7 @@ class BooksController < ApplicationController
   end
 
   def index
-    if params[:latest]
-      @books = Book.latest
-    elsif params[:old]
-      @books = Book.old
-    elsif params[:star_count]
-      @books = Book.star_count
-    else
-      @books = Book.all
-    end
+    @books = sort_by_params
     @book = Book.new
   end
 
@@ -85,6 +77,18 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     unless @book.user_id == current_user.id
       redirect_to books_path
+    end
+  end
+
+  def sort_by_params
+    if params[:latest]
+      Book.latest
+    elsif params[:old]
+      Book.old
+    elsif params[:star_count]
+      Book.star_count
+    else
+      Book.all
     end
   end
 end
