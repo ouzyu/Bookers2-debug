@@ -5,13 +5,13 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     if params[:latest]
-      @books = Book.latest
+      @books = @user.books.latest
     elsif params[:old]
-      @books = Book.old
+      @books = @user.books.old
     elsif params[:star_count]
-      @books = Book.star_count
+      @books = @user.books.star_count
     else
-      @books = Book.all
+      @books = @user.books
     end
     @book = Book.new
     @today_book = @books.created_today
@@ -75,6 +75,18 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     unless @user == current_user
       redirect_to user_path(current_user)
+    end
+  end
+
+  def sort_by
+    if params[:latest]
+      @books = Book.latest
+    elsif params[:old]
+      @books = Book.old
+    elsif params[:star_count]
+      @books = Book.star_count
+    else
+      @books = Book.all
     end
   end
 end
